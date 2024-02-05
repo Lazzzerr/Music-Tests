@@ -10,9 +10,14 @@ int buttonWidth = 100;
 int buttonHeight = 50;
 float xRect, yRect, widthRect, heightRect;
 int appWidth, appHeight;
-PImage[] songImages;
-int numberOfSongs = 3;
-int currentSong = numberOfSongs - numberOfSongs;
+PImage[] songImages = new PImage[3];
+
+String[] imagePaths = {
+  "SongImages/Mario.jpg",
+  "SongImages/Kirby.jpg",
+  "SongImages/Fortnite.jpg"
+};
+
 
 
 
@@ -21,25 +26,25 @@ int currentSong = numberOfSongs - numberOfSongs;
 
 void setup() {
   size(500, 400);
+  appWidth = width;
+  appHeight = height;
 
   // Songs order
   songs = new SoundFile[3];  // Change the size based on the number of songs
   songs[0] = new SoundFile(this, "Super-Mario-Bros.mp3");
   songs[1] = new SoundFile(this, "Green_Greens-4186.mp3");
   songs[2] = new SoundFile(this, "fortnite-og-classic-lobby-music-made-with-Voicemod-technology.mp3");
-  xRect = appWidth + 75;
-  yRect = appHeight + 30;
+  xRect = 50;
+  yRect = 50;
   widthRect = 300;
   heightRect = 160;
   
-  for (int i = 0; i < 3; i++) {
-  songImages[i] = loadImage("../SongImages/Mario.jpg + images.jpg + Fortnite.jpg");
-  }
-  rect(xRect, yRect, widthRect, heightRect);
+  songImages = new PImage[3];
   
-  
-  
-  
+for (int i = 0; i < 3; i++) {
+   songImages[i] = loadImage(imagePaths[i]);
+
+}
 
   // Start playing the first song
   playCurrentSong();
@@ -50,6 +55,9 @@ void draw() {
   background(200);
   appWidth = width;
   appHeight = height;
+  if (currentSongIndex >= 0 && currentSongIndex < songImages.length) {
+  image(songImages[currentSongIndex], xRect, yRect, widthRect, heightRect);
+  }
 
 
 
@@ -128,7 +136,7 @@ void keyPressed() {
 void mousePressed() {
   // Check if the mouse is over the play button
   float playButtonX = width / 4 - buttonWidth / 2;
-  float playButtonY = height / 2 - buttonHeight + 5;
+  float playButtonY = height / 2 - buttonHeight + 50;
   if (mouseX > playButtonX && mouseX < playButtonX + buttonWidth && mouseY > playButtonY && mouseY < playButtonY + buttonHeight) {
     togglePlayPause();
   }
